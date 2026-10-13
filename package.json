@@ -1,0 +1,10 @@
+{
+  "name": "home",
+  "version": "1.0.0",
+  "description": "kamradtfamily.net — ORACLE chat powered by local Ollama",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0"
+  }
+}
