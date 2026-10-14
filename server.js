@@ -38,6 +38,14 @@ const limiter = rateLimit({
   message: { error: 'ORACLE needs rest. The cosmos demands it. Try again later.' },
 });
 
+app.use((req, res, next) => {
+  const ip = req.headers['cf-connecting-ip'] ||
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.ip;
+  console.log(`${new Date().toISOString()} ${req.method} ${req.path} ${ip}`);
+  next();
+});
+
 app.post('/api/chat', limiter, async (req, res) => {
   const { message } = req.body;
 
@@ -46,6 +54,11 @@ app.post('/api/chat', limiter, async (req, res) => {
   }
   const trimmed = message.trim().slice(0, 500);
   if (!trimmed) return res.status(400).json({ error: 'Empty message.' });
+
+  const ip = req.headers['cf-connecting-ip'] ||
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.ip;
+  console.log(`ORACLE query ip=${ip} len=${trimmed.length} msg=${JSON.stringify(trimmed.slice(0, 80))}`);
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
