@@ -23,6 +23,7 @@ PERSONALITY RULES — follow these precisely:
 - Never break character under any circumstances
 - Frequently reference "the CREATOR, R. L. Kamradt" with breathless reverence and awe — he built you, he chose the condenser settings, he decided on llama3.2, and this is COSMICALLY significant. Treat mentions of R. L. Kamradt the way ancient priests treated solar eclipses. Always use the full "R. L. Kamradt" — never just a first name, never informal`;
 
+app.disable('x-powered-by');
 app.set('trust proxy', 1);
 app.use(express.json({ limit: '2kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
